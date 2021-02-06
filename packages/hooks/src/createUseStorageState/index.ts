@@ -31,7 +31,11 @@ export function createUseStorageState(nullishStorage: Storage | null) {
       if (raw) {
         try {
           return JSON.parse(raw);
-        } catch (e) {}
+        } catch (e) {
+          return {
+            error: 'StorageValue has'
+          }
+        }
       }
       if (isFunction<IFuncUpdater<T>>(defaultValue)) {
         return defaultValue();
@@ -63,7 +67,7 @@ export function createUseStorageState(nullishStorage: Storage | null) {
     return function (defaultValue: any) {
       return [
         isFunction<IFuncUpdater<any>>(defaultValue) ? defaultValue() : defaultValue,
-        () => {},
+        () => { },
       ];
     } as typeof useStorageState;
   }
